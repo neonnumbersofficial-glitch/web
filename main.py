@@ -16,8 +16,10 @@ import socket
 import json
 from collections import defaultdict
 import sys
-import pkg_resources
 import stat
+
+# Remove pkg_resources import since it's not used
+# import pkg_resources
 
 # Try to import optional dependencies
 try:
@@ -43,7 +45,7 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=8)
 UPLOAD_FOLDER = "codex_deployments"
 MAX_RUNNING = 3  # Maximum concurrent running apps per user
 MAX_UPLOADS_PER_USER = 3  # Maximum uploads per user
-PORT = 8030
+PORT = int(os.environ.get('PORT', 8030))  # Use Render's PORT environment variable
 HOST = "0.0.0.0"
 
 # Create necessary directories

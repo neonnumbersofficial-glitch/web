@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ᎬꪎՄ CODEX · ACCESS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000000;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', monospace;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Matrix Rain Effect */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: -1;
+        }
+
+        .matrix-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 255, 0, 0.03) 0px,
+                transparent 1px,
+                rgba(0, 255, 0, 0.02) 2px,
+                transparent 3px
+            );
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        .glitch-text {
+            position: absolute;
+            color: #0f0;
+            font-size: 10px;
+            opacity: 0.1;
+            white-space: nowrap;
+            animation: glitch 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes glitch {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .terminal {
+            width: 90%;
+            max-width: 500px;
+            background: #0a0a0a;
+            border: 2px solid #0f0;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 0 30px #0f0,
+                        0 0 10px #0f0 inset;
+            position: relative;
+            z-index: 1;
+        }
+
+        .terminal::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid #0f0;
+            border-radius: 8px;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #0f0;
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .terminal-dots span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #0f0;
+            animation: pulse 2s infinite;
+        }
+
+        .terminal-dots span:nth-child(2) { animation-delay: 0.3s; }
+        .terminal-dots span:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .terminal-title {
+            color: #0f0;
+            font-size: 16px;
+            font-weight: bold;
+            margin-left: auto;
+            letter-spacing: 2px;
+        }
+
+        .ascii-art {
+            color: #0f0;
+            font-size: 12px;
+            line-height: 1.3;
+            text-align: center;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .login-form {
+            margin-top: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-label {
+            color: #0f0;
+            font-size: 12px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .input-label::before {
+            content: '>';
+            color: #0f0;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            background: #000;
+            border: 1px solid #0f0;
+            border-radius: 4px;
+            padding: 15px;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 15px #0f0;
+            border-color: #0f0;
+        }
+
+        input::placeholder {
+            color: #0f0;
+            opacity: 0.3;
+        }
+
+        .hack-btn {
+            width: 100%;
+            background: transparent;
+            border: 2px solid #0f0;
+            color: #0f0;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .hack-btn:hover {
+            background: #0f0;
+            color: #000;
+            box-shadow: 0 0 30px #0f0;
+        }
+
+        .hack-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .hack-btn:hover::before {
+            left: 100%;
+        }
+
+        .admin-link {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .admin-link a {
+            color: #0f0;
+            text-decoration: none;
+            font-size: 12px;
+            border: 1px solid #0f0;
+            padding: 8px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            display: inline-block;
+            opacity: 0.7;
+        }
+
+        .admin-link a:hover {
+            background: #0f0;
+            color: #000;
+            opacity: 1;
+        }
+
+        .system-status {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #0f0;
+            display: flex;
+            justify-content: space-between;
+            color: #0f0;
+            font-size: 11px;
+            opacity: 0.7;
+        }
+
+        .blink {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Random glitch lines */
+        .glitch-line {
+            position: absolute;
+            height: 2px;
+            background: #0f0;
+            opacity: 0.1;
+            pointer-events: none;
+            animation: glitchLine 5s infinite;
+        }
+
+        @keyframes glitchLine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix background -->
+    <div class="matrix-bg"></div>
+    
+    <!-- Glitch text lines -->
+    <div class="glitch-text" style="top: 20%;">> ACCESSING CODEX > DECRYPTING > LOADING MODULES ></div>
+    <div class="glitch-text" style="top: 40%; animation-delay: -3s;">> SYSTEM BREACH > ENCRYPTED > BACKDOOR OPEN ></div>
+    <div class="glitch-text" style="top: 60%; animation-delay: -7s;">> CRACKING HASH > AUTHENTICATING > ACCESS GRANTED ></div>
+    <div class="glitch-text" style="top: 80%; animation-delay: -11s;">> 1337 > CODEX > ROOT > PRIVILEGES ></div>
+    
+    <!-- Random glitch lines -->
+    <div class="glitch-line" style="top: 15%; width: 100%;"></div>
+    <div class="glitch-line" style="top: 85%; width: 80%; animation-delay: -2s;"></div>
+    
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="terminal-title">ᎬꪎՄ CODEX v2.0</div>
+        </div>
+        
+        <div class="ascii-art">
+            ░▒▓█ ᎬꪎՄ CODEX █▓▒░<br>
+            ──────────────────<br>
+            ACCESS TERMINAL v2.0
+        </div>
+        
+        <form method="post" class="login-form">
+            <div class="input-group">
+                <div class="input-label">USERNAME</div>
+                <input type="text" name="username" placeholder="enter handle..." required autofocus>
+            </div>
+            
+            <div class="input-group">
+                <div class="input-label">PASSWORD</div>
+                <input type="password" name="password" placeholder="••••••••">
+            </div>
+            
+            <button type="submit" class="hack-btn">>_ ACCESS CODEX</button>
+        </form>
+        
+        <div class="admin-link">
+            <a href="/admin">[ ADMIN TERMINAL ]</a>
+        </div>
+        
+        <div class="system-status">
+            <span>● SECURE: ENCRYPTED</span>
+            <span>● PROTOCOL: 256-BIT</span>
+            <span class="blink">● CONNECTION: ACTIVE</span>
+        </div>
+    </div>
+</body>
+</html>
